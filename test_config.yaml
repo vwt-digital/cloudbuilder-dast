@@ -1,14 +1,14 @@
 schemaVersion: "2.0.0"
 
 fileExistenceTests:
-    - name: 'coverage entrypoint'
-        path: '/usr/local/bin/docker-dast.sh'
-        shouldExist: true
-        isExecutableBy: 'root'
+  - name: 'coverage entrypoint'
+    path: '/usr/local/bin/docker-dast.sh'
+    shouldExist: true
+    isExecutableBy: 'owner'
 
 metadataTest:
-    entrypoint: ["docker-dast.sh"]
-    workdir: "/workspace"
+  entrypoint: ["docker-dast.sh"]
+  workdir: "/workspace"
 
 commandTests:
   - name: "python 3.7 exists"
