@@ -1,10 +1,10 @@
 steps:
     # Build an image.
     - name: 'gcr.io/cloud-builders/docker'
-      args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/container-dast', '.']
+      args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '.']
     # Test the image.
     - name: 'gcr.io/gcp-runtimes/container-structure-test'
-      args: ['test', '--image', 'eu.gcr.io/$PROJECT_ID/image', '--config', 'test_config.yaml']
+      args: ['test', '--image', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '--config', 'test_config.yaml']
     
     # Push the image.
-    images: ['eu.gcr.io/vwt-d-gew1-dat-containers/container-dast']
+images: ['eu.gcr.io/$PROJECT_ID/cloudbuilder-dast']
