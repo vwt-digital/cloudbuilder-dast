@@ -1,10 +1,20 @@
 steps:
-    # Build an image.
-    - name: 'gcr.io/cloud-builders/docker'
-      args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '.']
-    # Test the image.
-    - name: 'gcr.io/gcp-runtimes/container-structure-test'
-      args: ['test', '--image', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '--config', 'test_config.yaml']
-    
-    # Push the image.
-images: ['eu.gcr.io/$PROJECT_ID/cloudbuilder-dast']
+  # Build an image.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '.']
+  # Test the image.
+  - name: 'gcr.io/gcp-runtimes/container-structure-test'
+    args: ['test', '--image', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '--config', 'test_config.yaml']
+  # Push the image.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast']
+  # Only keep the 10 most recent images
+  - name: 'gcr.io/cloud-builders/gcloud-slim'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+    set -eou pipefail
+    for digest in $(gcloud container images list-tags eu.gcr.io/$PROJECT_ID/cloudbuilder-dast --limit=99999 --sort-by=TIMESTAMP --format='get(digest)' | head -n-10); do
+      gcloud container images delete -q --force-delete-tags "eu.gcr.io/$PROJECT_ID/cloudbuilder-dast@digest"
+    done
