@@ -14,8 +14,8 @@ echo "--------"
 echo Starting verification of desired http plaintext behaviour...
 python /sec-helpers/verify-no-http/main.py ${domain_name}
 echo "--------"
-echo Starting SSLlabs verification, this may take between 3-5 minutes...
-python /sec-helpers/verify-encryption-in-transit/main.py ${domain_name}
+echo Starting HSTS max-age verification
+python /sec-helpers/verify-hsts/main.py ${domain_name}
 #echo "--------"
 #if [ "$type" == "frontend" ]; then
 #    echo Starting Content Security Policy validation...
