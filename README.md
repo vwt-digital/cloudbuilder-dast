@@ -1,4 +1,4 @@
-# Container-DAST
+# Cloudbuilder-DAST
 
 This container allows us to run dynamic application security tests in our Cloud Build pipelines.
 It allows us to add new dynamic testers without adding them to individual cloudbuild.yaml files of our front-end and API projects.
@@ -16,11 +16,11 @@ Two arguments are required to run this container:
 Typically this container would run as a custom build step in a Cloud Build pipeline after deploying it to Google App Engine.
 
 ```
-- name: 'gcr.io/$PROJECT_ID/container-dast'
+- name: 'gcr.io/$PROJECT_ID/cloudbuilder-dast'
   args: ['api.example.com', 'api']
 ```
 
 ```
-docker run -ti container-dash api.example.com api
+docker run -ti cloudbuilder-dast api.example.com api
 ```
 
