@@ -24,7 +24,7 @@ steps:
     entrypoint: 'bash'
     args:
       - '-c'
-      - 'gcloud scheduler jobs delete --quiet ${PROJECT_ID}-weekly-rebuild || exit 0'
+      - 'gcloud scheduler jobs delete --quiet ${REPO_NAME}-weekly-rebuild || exit 0'
   # Create weekly rebuild scheduled job
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
@@ -32,7 +32,7 @@ steps:
       - 'jobs'
       - 'create'
       - 'http'
-      - '${PROJECT_ID}-weekly-rebuild'
+      - '${REPO_NAME}-weekly-rebuild'
       - '--schedule=0 7 * * 4'
       - '--uri=https://cloudbuild.googleapis.com/v1/projects/${PROJECT_ID}/triggers/Push-to-${REPO_NAME}-${BRANCH_NAME}-branch:run'
       - '--http-method=POST'
