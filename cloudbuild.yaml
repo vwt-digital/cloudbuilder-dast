@@ -16,5 +16,5 @@ steps:
     - |
       set -eou pipefail
       for digest in $(gcloud container images list-tags eu.gcr.io/$PROJECT_ID/cloudbuilder-dast --limit=99999 --sort-by=TIMESTAMP --format='get(digest)' | head -n-10); do
-        gcloud container images delete -q --force-delete-tags "eu.gcr.io/$PROJECT_ID/cloudbuilder-dast@digest"
+        gcloud container images delete -q --force-delete-tags "eu.gcr.io/$PROJECT_ID/cloudbuilder-dast@$${digest}"
       done
