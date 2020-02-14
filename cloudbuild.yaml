@@ -1,3 +1,4 @@
+---
 steps:
   # Build an image.
   - name: 'gcr.io/cloud-builders/docker'
@@ -12,9 +13,29 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud-slim'
     entrypoint: 'bash'
     args:
-    - '-c'
-    - |
-      set -eou pipefail
-      for digest in $(gcloud container images list-tags eu.gcr.io/$PROJECT_ID/cloudbuilder-dast --limit=99999 --sort-by=TIMESTAMP --format='get(digest)' | head -n-10); do
-        gcloud container images delete -q --force-delete-tags "eu.gcr.io/$PROJECT_ID/cloudbuilder-dast@$${digest}"
-      done
+      - '-c'
+      - |
+        set -eou pipefail
+        for digest in $(gcloud container images list-tags eu.gcr.io/$PROJECT_ID/cloudbuilder-dast --limit=99999 --sort-by=TIMESTAMP --format='get(digest)' | head -n-10); do
+          gcloud container images delete -q --force-delete-tags "eu.gcr.io/$PROJECT_ID/cloudbuilder-dast@$${digest}"
+        done
+  # Delete weekly rebuild scheduled job to allow recreation
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'gcloud scheduler jobs delete --quiet ${PROJECT_ID}-weekly-rebuild || exit 0'
+  # Create weekly rebuild scheduled job
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'scheduler'
+      - 'jobs'
+      - 'create'
+      - 'http'
+      - '${PROJECT_ID}-weekly-rebuild'
+      - '--schedule=0 7 * * 4'
+      - '--uri=https://cloudbuild.googleapis.com/v1/projects/${PROJECT_ID}/triggers/Push-to-${REPO_NAME}-${BRANCH_NAME}-branch:run'
+      - '--http-method=POST'
+      - '--message-body={"branchName": "${BRANCH_NAME}"}'
+      - '--oauth-service-account-email=${PROJECT_ID}@appspot.gserviceaccount.com'
+      - '--oauth-token-scope=https://www.googleapis.com/auth/cloud-platform'
