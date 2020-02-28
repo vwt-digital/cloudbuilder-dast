@@ -10,21 +10,15 @@ if [ "$2" == "" ]; then
 fi
 domain_name=$1
 type=$2
-resource=$3
 echo "--------"
 echo Starting verification of desired http plaintext behaviour...
 python /sec-helpers/verify-no-http/main.py "${domain_name}"
 echo "--------"
 echo Starting HSTS max-age verification
 python /sec-helpers/verify-hsts/main.py "${domain_name}"
-
-if [ "$3" != "" ]; then
-	echo "--------"
-	echo Starting CORS Policy verification
-	python /sec-helpers/verify-cors-policy/main.py "${domain_name}" "${type}" "${resource}"
-else
-	echo "Skipping CORS"
-fi
+echo "--------"
+echo Starting CORS Policy verification
+python /sec-helpers/verify-cors-policy/main.py "${domain_name}"
 #echo "--------"
 #if [ "$type" == "frontend" ]; then
 #    echo Starting Content Security Policy validation...
