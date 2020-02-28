@@ -5,11 +5,10 @@
 #
 set -eo pipefail
 if [ "$2" == "" ]; then
-    echo "This container expects atleast two arguments: a domain name, and type"
+    echo "This container expects two arguments: a domain name, and type"
     exit 1
 fi
 domain_name=$1
-type=$2
 echo "--------"
 echo Starting verification of desired http plaintext behaviour...
 python /sec-helpers/verify-no-http/main.py "${domain_name}"
