@@ -16,8 +16,10 @@ echo "--------"
 echo Starting HSTS max-age verification
 python /sec-helpers/verify-hsts/main.py "${domain_name}"
 echo "--------"
-echo Starting CORS Policy verification
-python /sec-helpers/verify-cors-policy/main.py "${domain_name}"
+if [ "$type" == "api" ]; then
+	echo Starting CORS Policy verification
+	python /sec-helpers/verify-cors-policy/main.py "${domain_name}"
+fi
 #echo "--------"
 #if [ "$type" == "frontend" ]; then
 #    echo Starting Content Security Policy validation...
