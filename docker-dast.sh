@@ -9,6 +9,7 @@ if [ "$2" == "" ]; then
     exit 1
 fi
 domain_name=$1
+type=$2
 echo "--------"
 echo Starting verification of desired http plaintext behaviour...
 python /sec-helpers/verify-no-http/main.py "${domain_name}"
