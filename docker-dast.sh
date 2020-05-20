@@ -10,6 +10,12 @@ if [ "$2" == "" ]; then
 fi
 domain_name=$1
 type=$2
+
+if [ "$3" != "" ]; then
+  domain_name="${domain_name/develop/$3}"
+  domain_name="${domain_name/master-/}"
+fi
+
 echo "--------"
 echo Starting verification of desired http plaintext behaviour...
 python /sec-helpers/verify-no-http/main.py "${domain_name}"

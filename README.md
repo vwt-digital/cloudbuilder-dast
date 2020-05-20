@@ -23,4 +23,20 @@ Typically this container would run as a custom build step in a Cloud Build pipel
 ```
 docker run -ti cloudbuilder-dast api.example.com api
 ```
+#### Optional arguments:
+1. Development branch name replacement, E.g. `test`
+
+As an example:
+
+```
+docker run cloudbuilder-dast develop-api.example.com api test
+```
+Will result in `test-api.example.com` to be set as the domain.
+```
+docker run cloudbuilder-dast master-api.example.com api test
+```
+Will result in `api.example.com` to be set as the domain.
+
+If no 3rd argument is given, the domain will remain unchanged.
+
 
