@@ -22,13 +22,13 @@ python /sec-helpers/verify-no-http/main.py "${domain_name}"
 echo "--------"
 echo Starting HSTS max-age verification
 python /sec-helpers/verify-hsts/main.py "${domain_name}"
-#echo "--------"
-#echo Starting TLS version test
-#if [ "$3" != "" ]; then
-#  python /sec-helpers/verify-high-tls/main.py "${domain_name}"
-#else
-#  python /sec-helpers/verify-high-tls/main.py "${domain_name}" --force-pass
-#fi
+echo "--------"
+echo Starting TLS version test
+if [ "$3" != "" ]; then
+  python /sec-helpers/verify-high-tls/main.py "${domain_name}"
+else
+  python /sec-helpers/verify-high-tls/main.py "${domain_name}" --force-pass
+fi
 echo "--------"
 echo Starting no SSL test
 bash /sec-helpers/verify-no-ssl/ssl3.sh "${domain_name}"
