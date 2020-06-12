@@ -9,8 +9,8 @@ It allows us to add new dynamic testers without adding them to individual cloudb
 
 ## Usage
 
-Two arguments are required to run this container: 
-1. a domain name, without http:// or https:// 
+Two arguments are required to run this container:
+1. a domain name, without http:// or https://
 2. type of service, `frontend` or `api`
 
 Typically this container would run as a custom build step in a Cloud Build pipeline after deploying it to Google App Engine.
@@ -39,4 +39,8 @@ Will result in `api.example.com` to be set as the domain.
 
 If no 3rd argument is given, the domain will remain unchanged.
 
-
+##### Special (temporary) usage TLS version test:
+TLS version test relies on the value of the third argument (Development branch name replacement).
+If no third argument is passed, the TLS version test will always exit with code 0. Failure to provide the
+right TLS versions will be shown.
+The TLS version test will give the right exit code if the third argument does have valu.
