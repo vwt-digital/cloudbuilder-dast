@@ -43,4 +43,4 @@ If no 3rd argument is given, the domain will remain unchanged.
 TLS version test relies on the value of the third argument (Development branch name replacement).
 If no third argument is passed, the TLS version test will always exit with code 0. Failure to provide the
 right TLS versions will be shown.
-The TLS version test will give the right exit code if the third argument does have valu.
+The TLS version test will give the right exit code if the third argument does have value.
