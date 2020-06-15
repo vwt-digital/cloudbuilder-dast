@@ -11,10 +11,6 @@ fi
 domain_name=$1
 type=$2
 
-if [ "$3" != "" ]; then
-  domain_name="${domain_name/develop/$3}"
-  domain_name="${domain_name/master-/}"
-fi
 
 echo "--------"
 echo Starting verification of desired http plaintext behaviour...
@@ -24,11 +20,7 @@ echo Starting HSTS max-age verification
 python /sec-helpers/verify-hsts/main.py "${domain_name}"
 echo "--------"
 echo Starting TLS version test
-if [ "$3" != "" ]; then
-  python /sec-helpers/verify-high-tls/main.py "${domain_name}"
-else
-  python /sec-helpers/verify-high-tls/main.py "${domain_name}" --force-pass
-fi
+python /sec-helpers/verify-high-tls/main.py "${domain_name}"
 echo "--------"
 echo Starting no SSL test
 bash /sec-helpers/verify-no-ssl/ssl3.sh "${domain_name}"
