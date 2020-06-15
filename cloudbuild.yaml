@@ -2,7 +2,7 @@
 steps:
   # Build an image.
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '.']
+    args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '.', '--build-arg', 'TARGET_BRANCH=$BRANCH_NAME']
   # Test the image.
   - name: 'gcr.io/gcp-runtimes/container-structure-test'
     args: ['test', '--image', 'eu.gcr.io/$PROJECT_ID/cloudbuilder-dast', '--config', 'test_config.yaml']
@@ -16,7 +16,8 @@ steps:
       - '-c'
       - |
         set -eou pipefail
-        for digest in $(gcloud container images list-tags eu.gcr.io/$PROJECT_ID/cloudbuilder-dast --limit=99999 --sort-by=TIMESTAMP --format='get(digest)' | head -n-10); do
+        for digest in $(gcloud container images list-tags eu.gcr.io/$PROJECT_ID/cloudbuilder-dast --limit=99999 \
+        --sort-by=TIMESTAMP --format='get(digest)' | head -n-10); do
           gcloud container images delete -q --force-delete-tags "eu.gcr.io/$PROJECT_ID/cloudbuilder-dast@$${digest}"
         done
   # Delete weekly rebuild scheduled job to allow recreation

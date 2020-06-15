@@ -9,8 +9,8 @@ It allows us to add new dynamic testers without adding them to individual cloudb
 
 ## Usage
 
-Two arguments are required to run this container: 
-1. a domain name, without http:// or https:// 
+Two arguments are required to run this container:
+1. a domain name, without http:// or https://
 2. type of service, `frontend` or `api`
 
 Typically this container would run as a custom build step in a Cloud Build pipeline after deploying it to Google App Engine.
@@ -23,20 +23,6 @@ Typically this container would run as a custom build step in a Cloud Build pipel
 ```
 docker run -ti cloudbuilder-dast api.example.com api
 ```
-#### Optional arguments:
-1. Development branch name replacement, E.g. `test`
 
-As an example:
-
-```
-docker run cloudbuilder-dast develop-api.example.com api test
-```
-Will result in `test-api.example.com` to be set as the domain.
-```
-docker run cloudbuilder-dast master-api.example.com api test
-```
-Will result in `api.example.com` to be set as the domain.
-
-If no 3rd argument is given, the domain will remain unchanged.
-
-
+##### Special (temporary) usage TLS version test:
+If the domain name that is passed ends with `appspot.*`, it will force a pass for the TLS version test. Other domain name configurations will result in normal exit code behaviour.

@@ -1,4 +1,6 @@
 FROM python:3.7-slim
+ARG TARGET_BRANCH
+ENV TARGET_BRANCH ${TARGET_BRANCH:-master}
 WORKDIR /workspace
 RUN apt-get -y update && \
     apt-get -y install git && \
@@ -16,9 +18,9 @@ RUN cd /tmp && \
     make -i install && \
     cp local/bin/openssl /usr/local/bin/
 RUN cd / && \
-    git clone https://github.com/vwt-digital/sec-helpers.git && \
+    git clone --single-branch --branch $TARGET_BRANCH https://github.com/vwt-digital/sec-helpers.git && \
     cd /sec-helpers && \
-    pip install --no-cache-dir -r requirements.txt 
+    pip install --no-cache-dir -r requirements.txt
 RUN pip install virtualenv
 COPY docker-dast.sh /usr/local/bin/
 ENTRYPOINT ["docker-dast.sh"]
