@@ -23,24 +23,6 @@ Typically this container would run as a custom build step in a Cloud Build pipel
 ```
 docker run -ti cloudbuilder-dast api.example.com api
 ```
-#### Optional arguments:
-1. Development branch name replacement, E.g. `test`
-
-As an example:
-
-```
-docker run cloudbuilder-dast develop-api.example.com api test
-```
-Will result in `test-api.example.com` to be set as the domain.
-```
-docker run cloudbuilder-dast master-api.example.com api test
-```
-Will result in `api.example.com` to be set as the domain.
-
-If no 3rd argument is given, the domain will remain unchanged.
 
 ##### Special (temporary) usage TLS version test:
-TLS version test relies on the value of the third argument (Development branch name replacement).
-If no third argument is passed, the TLS version test will always exit with code 0. Failure to provide the
-right TLS versions will be shown.
-The TLS version test will however give the right exit code provided the third argument has a value.
+If the domain name that is passed ends with `appspot.*`, it will force a pass for the TLS version test. Other domain name configurations will result in normal exit code behaviour.
