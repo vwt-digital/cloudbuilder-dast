@@ -5,10 +5,14 @@
 #
 set -eo pipefail
 if [ "$2" == "" ]; then
-    echo "This container expects two arguments: a domain name, and type"
+    echo "This container expects two arguments: a domain name (or dispatch file), and type"
     exit 1
 fi
-domain_name=$1
+if [[ -f $1 ]]; then
+    domain_name=$(sed -n "s/\s*-\s*url.*:\s*\"\(.*\)\/.*/\1/p" "$1" | head -n1)
+else
+    domain_name=$1
+fi
 type=$2
 
 
