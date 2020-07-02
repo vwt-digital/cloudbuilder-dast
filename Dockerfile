@@ -9,7 +9,7 @@ RUN cd /tmp && \
     apt-get update && \
     apt install wget && \
     apt-get install build-essential -y && \
-    wget https://openssl.org/source/old/1.0.2/openssl-1.0.2k.tar.gz && \
+    wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2k.tar.gz && \
     tar -xvf openssl-1.0.2k.tar.gz && \
     cd openssl-1.0.2k/ && \
     ./config --prefix=`pwd`/local --openssldir=/usr/lib/ssl enable-ssl2 enable-ssl3 no-shared && \
