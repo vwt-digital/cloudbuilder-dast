@@ -5,6 +5,8 @@ WORKDIR /workspace
 RUN apt-get -y update && \
     apt-get -y install git && \
     rm -rf /var/lib/apt/lists/*
+COPY requirements.txt /workspace
+COPY dast.py /workspace
 RUN cd /tmp && \
     apt-get update && \
     apt install wget && \
@@ -17,10 +19,6 @@ RUN cd /tmp && \
     make && \
     make -i install && \
     cp local/bin/openssl /usr/local/bin/
-RUN cd / && \
-    git clone --single-branch --branch $TARGET_BRANCH https://github.com/vwt-digital/sec-helpers.git && \
-    cd /sec-helpers && \
-    pip install --no-cache-dir -r requirements.txt
-RUN pip install virtualenv
-COPY docker-dast.sh /usr/local/bin/
-ENTRYPOINT ["docker-dast.sh"]
+RUN pip install -r requirements.txt
+RUN if [ "$TARGET_BRANCH" = "develop" ] ; then pip install -i https://test.pypi.org/simple/ sec-helpers ; else pip install sec-helpers; fi
+ENTRYPOINT ["python", "/workspace/dast.py"]
