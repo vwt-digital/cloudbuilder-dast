@@ -2,12 +2,12 @@ schemaVersion: "2.0.0"
 
 fileExistenceTests:
   - name: 'coverage entrypoint'
-    path: '/workspace/dast.py'
+    path: '/usr/local/bin/dast.py'
     shouldExist: true
     isExecutableBy: 'owner'
 
 metadataTest:
-  entrypoint: ["python", "/workspace/dast.py"]
+  entrypoint: ["python", "/usr/local/bin/dast.py"]
   workdir: "/workspace"
 
 commandTests:
