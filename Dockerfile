@@ -17,10 +17,7 @@ RUN cd /tmp && \
     make && \
     make -i install && \
     cp local/bin/openssl /usr/local/bin/
-RUN cd / && \
-    git clone --single-branch --branch $TARGET_BRANCH https://github.com/vwt-digital/sec-helpers.git && \
-    cd /sec-helpers && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install virtualenv
 COPY docker-dast.sh /usr/local/bin/
 ENTRYPOINT ["docker-dast.sh"]

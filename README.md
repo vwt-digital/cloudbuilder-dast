@@ -24,5 +24,5 @@ Typically this container would run as a custom build step in a Cloud Build pipel
 docker run -ti cloudbuilder-dast api.example.com api
 ```
 
-##### Special (temporary) usage TLS version test:
+##### Special usage TLS version test:
 If the domain name that is passed ends with `appspot.*`, it will force a pass for the TLS version test. Other domain name configurations will result in normal exit code behaviour.

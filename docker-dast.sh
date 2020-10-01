@@ -16,25 +16,6 @@ fi
 type=$2
 
 
-echo "--------"
-echo Starting verification of desired http plaintext behaviour...
-python /sec-helpers/verify-no-http/main.py "${domain_name}"
-echo "--------"
-echo Starting HSTS max-age verification
-python /sec-helpers/verify-hsts/main.py "${domain_name}"
-echo "--------"
-echo Starting TLS version test
-python /sec-helpers/verify-high-tls/main.py "${domain_name}"
-echo "--------"
-echo Starting no SSL test
-bash /sec-helpers/verify-no-ssl/ssl3.sh "${domain_name}"
-echo "--------"
-if [ "$type" == "api" ]; then
-	echo Starting CORS Policy verification
-	python /sec-helpers/verify-cors-policy/main.py "${domain_name}"
-	echo "--------"
-fi
-#echo "--------"
-#if [ "$type" == "frontend" ]; then
-#    echo Starting Content Security Policy validation...
-#    python /sec-helpers/verify-content-security-policy.py
+echo Running sec_helpers...
+echo
+python test.py "${domain_name}" "${type}"
