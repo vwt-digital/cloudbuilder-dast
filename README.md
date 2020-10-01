@@ -23,6 +23,11 @@ Typically this container would run as a custom build step in a Cloud Build pipel
 ```
 docker run -ti cloudbuilder-dast api.example.com api
 ```
+You can also replace the domain name with a file containing the domain name. The domain should be visible with the following Regex search: `.*url: \"(.*)/\\*\".*`:
+
+```
+- url: "{domain}.{tld}/*"
+```
 
 ##### Special usage TLS version test:
 If the domain name that is passed ends with `appspot.*`, it will force a pass for the TLS version test. Other domain name configurations will result in normal exit code behaviour.

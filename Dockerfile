@@ -6,7 +6,7 @@ RUN apt-get -y update && \
     apt-get -y install git && \
     rm -rf /var/lib/apt/lists/*
 COPY requirements.txt /workspace
-COPY test.py /workspace
+COPY dast.py /workspace
 RUN cd /tmp && \
     apt-get update && \
     apt install wget && \
@@ -21,4 +21,4 @@ RUN cd /tmp && \
     cp local/bin/openssl /usr/local/bin/
 RUN pip install -r requirements.txt
 RUN if [ "$TARGET_BRANCH" = "develop" ] ; then pip install -i https://test.pypi.org/simple/ sec-helpers ; else pip install sec-helpers; fi
-ENTRYPOINT ["python", "/workspace/test.py"]
+ENTRYPOINT ["python", "/workspace/dast.py"]
