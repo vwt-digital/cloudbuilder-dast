@@ -1,0 +1,20 @@
+---
+steps:
+  - name: 'docker'
+    args: ['build', '-t', 'vwtdigital/cloudbuilders-dast', '.']
+
+  - name: 'docker'
+    args: ['tag', 'vwtdigital/cloudbuilders-dast:latest',
+           'vwtdigital/cloudbuilders-dast:$TAG_NAME']
+
+  # Get secrets
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        apt-get install docker.io
+        USERNAME=$(gcloud secrets versions access latest --secret="$PROJECT_ID"-username)
+        PASSWORD=$(gcloud secrets versions access latest --secret="$PROJECT_ID"-password)
+        docker login -u $USERNAME -p $PASSWORD
+        docker push vwtdigital/cloudbuilders-dast
