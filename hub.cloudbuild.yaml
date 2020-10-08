@@ -17,5 +17,5 @@ steps:
         apt-get install docker.io -y
         USERNAME=$(gcloud secrets versions access latest --secret="$PROJECT_ID"-username)
         PASSWORD=$(gcloud secrets versions access latest --secret="$PROJECT_ID"-password)
-        docker login -u $USERNAME -p $PASSWORD
+        docker login -u $$USERNAME -p $$PASSWORD
         docker push vwtdigital/cloudbuilders-dast
