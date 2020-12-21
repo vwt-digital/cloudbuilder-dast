@@ -7,11 +7,10 @@ fileExistenceTests:
     isExecutableBy: 'owner'
 
 metadataTest:
-  entrypoint: ["python", "/usr/local/bin/dast.py"]
-  workdir: "/workspace"
+  entrypoint: ["python3", "/usr/local/bin/dast.py"]
 
 commandTests:
   - name: "python 3.7 exists"
-    command: "python"
+    command: "python3"
     args: ["--version"]
     expectedOutput: ['Python 3.7.\d+']
