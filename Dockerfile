@@ -13,7 +13,6 @@ RUN git clone --depth 1 --single-branch --branch OpenSSL_1_1_1-stable https://gi
     && cd - && rm -Rf openssl \
     && sed -i 's/CipherString = DEFAULT@SECLEVEL=2/CipherString = ALL@SECLEVEL=1/g' /etc/ssl/openssl.cnf
 
-RUN ls
 RUN if [ "$TARGET_BRANCH" = "develop" ] ; then pip3 install -i https://test.pypi.org/simple/ sec-helpers ; else pip3 install sec-helpers; fi
 
 ENTRYPOINT ["python3", "/usr/local/bin/dast.py"]
